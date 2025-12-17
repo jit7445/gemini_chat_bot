@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { chatStore } from "../utils/chatStore";
+import { chatStore } from "../utils/ChatStore";
 import { extractText } from "../utils/pdf.util";
 import { askGemini } from "../services/gemini.service";
 
