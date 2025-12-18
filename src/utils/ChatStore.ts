@@ -1,13 +1,31 @@
-export const chatStore = {
-  messages: [] as { role: "user" | "model"; text: string }[],
-  documentText: "",
-  imageBase64: "",
-  chatId: Date.now().toString(),
+import crypto from "crypto";
+
+type Message = {
+  role: "user" | "model";
+  text: string;
+};
+
+class ChatStore {
+  chatId: string = crypto.randomUUID();
+
+  messages: Message[] = [];
+
+  // Document-related
+  documentText: string = "";
+  documentBase64?: string;
+  documentMimeType?: string;
+
+  // Image-related
+  imageBase64?: string;
 
   reset() {
+    this.chatId = crypto.randomUUID();
     this.messages = [];
     this.documentText = "";
-    this.imageBase64 = "";
-    this.chatId = Date.now().toString();
+    this.documentBase64 = undefined;
+    this.documentMimeType = undefined;
+    this.imageBase64 = undefined;
   }
-};
+}
+
+export const chatStore = new ChatStore();
