@@ -2,12 +2,9 @@ import { Request, Response } from "express";
 import { chatStore } from "../utils/ChatStore";
 import { extractText } from "../utils/pdf.util";
 import { askGemini } from "../services/gemini.service";
-
 export const sendMessage = async (req: Request, res: Response) => {
   try {
     const { message } = req.body;
-
-    // ✅ Validate input
     if (!message || typeof message !== "string") {
       return res.status(400).json({ error: "Message is required" });
     }
@@ -46,7 +43,9 @@ export const uploadDocument = async (req: Request, res: Response) => {
     return res.status(400).json({ error: "No file uploaded" });
   }
 
+  // console.log("Uploaded File:", req.file.originalname);
   chatStore.documentText = await extractText(req.file);
+  // console.log("Extracted Document Text:", chatStore.documentText);
   res.json({ message: "Document uploaded successfully" });
 };
 
